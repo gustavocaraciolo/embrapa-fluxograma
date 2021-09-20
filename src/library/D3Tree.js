@@ -192,27 +192,40 @@ class D3Tree {
    */
   inicializeData(reset) {
     this.data = {
-      name: "A1",
-      description: DEFAULT.description,
-      value: 1, //
-      class: DEFAULT.class,
-      resource: DEFAULT.resource,
-      unit: DEFAULT.unit,
-      category: DEFAULT.category,
-      duration: DEFAULT.duration,
-      factor: DEFAULT.factor,
+      name: "GER",
+      parent: null,
       children: [
         {
-          name: "B1",
-          description: DEFAULT.description,
-          value: 1,
-          class: DEFAULT.class,
-          resource: DEFAULT.resource,
-          unit: DEFAULT.unit,
-          category: DEFAULT.category,
-          duration: DEFAULT.duration,
-          factor: DEFAULT.factor,
-          children: []
+          name: "ANA",
+          children: [
+            {
+              name: "ANAA",
+              children: [
+                {
+                  name: "ECU",
+                  children: [
+                    {
+                      name: "ABPROCINQ",
+                      children: []
+                    },
+                    {
+                      name: "ARQDEC",
+                      children: []
+                    }],
+                  idBalance: 1
+                }
+              ]
+            },
+            {
+              name: "ANAI",
+              children: [
+                {
+                name: "ECU",
+                idBalance: 1
+                }
+              ]
+            }
+          ]
         }
       ]
     };
@@ -306,9 +319,9 @@ class D3Tree {
       .separation(function(a, b) {
         return a.parent === b.parent ? 1 : 1.25;
       });
-    // console.log("==== New Data ====");
-    // console.log(this.data);
-    // console.log("==================");
+    //console.log("==== New Data ====");
+    //console.log(this.data);
+    //console.log("==================");
     this.root = d3.hierarchy(this.data);
     treeLayout(this.root);
     this.drawPath();
@@ -584,22 +597,26 @@ class D3Tree {
    * Adiciona um novo nó filho ao nó selecionado
    */
   addChildrenNode(selected, i, nodeType) {
-    if (!this.checkIfHavePermission(selected, nodeType)) {
+    /* if (!this.checkIfHavePermission(selected, nodeType)) {
       return false;
-    }
+    }*/
 
+    console.log("selected depth: " + selected.depth);
+    console.log("selected height: " + selected.height);
+    console.log("i: " + i);
+    console.log("nodeType: " + nodeType);
     let newNodeData = {
-      children: [],
+      name: "",
+      description: ""
+      /*children: [],
       value: nodeType,
       idBalance: 0,
-      name: "",
-      description: "",
       class: DEFAULT.class,
       resource: selected.data.resource,
       unit: selected.data.unit,
       category: selected.data.category,
       duration: DEFAULT.duration,
-      factor: DEFAULT.factor
+      factor: DEFAULT.factor*/
     };
 
     //Cria um novo nó com base em newNodeData usando d3.hierarchy()
@@ -625,7 +642,7 @@ class D3Tree {
    * Remove o nó selecionado da árvore
    */
   removeChildrenNode(d) {
-    if (d.depth === 0 || d.depth === 1) {
+    /*if (d.depth === 0 || d.depth === 1) {
       this.msgAlertUser(error.cannotRemoveDefault);
       return false;
     }
@@ -643,7 +660,7 @@ class D3Tree {
     if (d.children) {
       this.msgAlertUser(error.cannotRemoveIfHaveChildrens);
       return false;
-    }
+    }*/
 
     this.checkIfNeedRemoveBalance(d);
 
@@ -739,39 +756,15 @@ class D3Tree {
     let balanceFatherCounter = 0;
     this.counterBalanceClick += 1;
 
+    console.log('this.counterBalanceClick: ' + this.counterBalanceClick);
+    console.log('d.depth: ' + d.depth);
+
     if (this.counterBalanceClick === 2) {
       this.counterBalanceClick = 0;
 
-      if (d === this.balanceClicked.d) {
-        this.resetNodeSelected(true);
-        return false;
-      }
 
-      if (
-        d.depth === 0 ||
-        d.depth === 1 ||
-        this.balanceClicked.d.depth === 0 ||
-        this.balanceClicked.d.depth === 1
-      ) {
-        this.msgAlertUser(error.cannotAddBalanceInDefaultNodes);
-        this.resetNodeSelected(true);
-        return false;
-      }
 
-      if (d.data.resource !== this.balanceClicked.d.data.resource) {
-        this.msgAlertUser(error.cannotHaveBalanceWithDifferentRessources);
-        this.resetNodeSelected(true);
-        return false;
-      }
 
-      if (
-        d.data.idBalance > 0 &&
-        d.data.idBalance === this.balanceClicked.d.data.idBalance
-      ) {
-        this.msgAlertUser(error.cannotCreateBalanceIfIsAlready);
-        this.resetNodeSelected(true);
-        return false;
-      }
 
       if (
         d.data.idBalance > 0 &&
@@ -784,38 +777,16 @@ class D3Tree {
         return true;
       }
 
-      if (this.balanceClicked.d.data.idBalance > 0) {
-        this.msgAlertUser(error.firstClickCannotBeBalance);
-        this.resetNodeSelected(true);
-        return false;
-      }
+
 
       if (!this.balanceClicked.d.children) {
-        if (!d.children) {
-          this.msgAlertUser(error.mustHaveChildren);
-          //console.log("d value: " + d.data.value);
-          //console.log("d lastvalue: " + this.balanceClicked.d.data.value);
-          this.resetNodeSelected(true);
-          return false;
-        }
 
-        if (d.children && d.data.value !== this.balanceClicked.d.data.value) {
-          this.msgAlertUser(error.mustStartwithChildren);
-          this.resetNodeSelected(true);
-          return false;
-        }
+
+
       } else {
-        if (!d.children) {
-          this.msgAlertUser(error.mixedMustBeDifferent);
-          this.resetNodeSelected(true);
-          return false;
-        }
 
-        if (d.data.value === this.balanceClicked.d.data.value) {
-          this.msgAlertUser(error.mixedMustBeDifferent);
-          this.resetNodeSelected(true);
-          return false;
-        }
+
+
 
         const target = d.data.idBalance;
         // Conta a quantidade de nós pais do balanço
@@ -829,27 +800,10 @@ class D3Tree {
           }
         });
 
-        if (
-          d.data.value !== this.balanceClicked.d.data.value &&
-          d.data.idBalance > 0 &&
-          balanceFatherCounter >= 2
-        ) {
-          this.msgAlertUser(error.mixedMustBeDifferent);
-          this.resetNodeSelected(true);
-          return false;
-        }
+
       }
 
-      if (
-        d.data.value !== this.balanceClicked.d.data.value &&
-        (d.children.length >= 2 || this.balanceClicked.d.children.length >= 2)
-      ) {
-        this.msgAlertUser(
-          error.cannotCreateMixBalanceWithFatherWithMore2Childrens
-        );
-        this.resetNodeSelected(true);
-        return false;
-      }
+
 
       if (d.data.idBalance > 0) {
         this.balanceClicked.d.data.idBalance = d.data.idBalance;

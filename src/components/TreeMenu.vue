@@ -57,7 +57,7 @@
     <v-toolbar color="#003399" dense dark fixed clipped-left app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="mr-5 align-center">
-        <span class="title">Embrapa</span>
+        <span class="title">BPMS - Fluxograma</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
