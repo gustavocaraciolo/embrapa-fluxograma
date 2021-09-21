@@ -88,125 +88,49 @@
       "CARCACA_cerquilha_BOVINOS": 129
     },
     "resources": {
-      "Bezerras desmamadas": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Gerada": {
+        "unit": "white",
+        "category": "GER"
       },
-      "Bezerras recriadas na seca": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Em Análise": {
+        "unit": "gold",
+        "category": "ANA"
       },
-      "Bezerras recriadas nas águas": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Em Análise (Identificada)": {
+        "unit": "lightgray",
+        "category": "ANAI"
       },
-      "Bezerros desmamados": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Em Análise (Anônimo)": {
+        "unit": "lavender",
+        "category": "ANAA"
       },
-      "Bezerros recriados na seca": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Em Curso": {
+        "unit": "beige",
+        "category": "ECU"
       },
-      "Bezerros recriados nas águas": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Em Complementação": {
+        "unit": "pink",
+        "category": "ECO"
       },
-      "Bois gordos": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Em Complementação (Prorrogação)": {
+        "unit": "plum",
+        "category": "ECOP"
       },
-      "Multíparas paridas após a monta": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Parecer do CA": {
+        "unit": "yellow",
+        "category": "PARECA"
       },
-      "Multíparas paridas após diagnóstico de prenhez": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Arquivado (Preliminar)": {
+        "unit": "orange",
+        "category": "ARQPRE"
       },
-      "Multíparas paridas após puerpério": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Arquivado (Decisão)": {
+        "unit": "paleturquoise",
+        "category": "ARQDEC"
       },
-      "Multíparas recém-paridas": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Multíparas solteiras após a monta": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Multíparas solteiras após puerpério": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Multíparas solteiras prenhes": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Multíparas solteiras vazias descartadas": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Multíparas solteiras vazias gordas": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Multíparas solteiras vazias": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Nulíparas após a monta": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Nulíparas prenhes": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Nulíparas prontas para a monta": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Nulíparas recriadas na seca": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Nulíparas vazias descartadas": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Nulíparas vazias gordas": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Primíparas paridas após a monta": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Primíparas paridas após diagnóstico de prenhez": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Primíparas prenhes após aleitamento": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Primíparas solteiras após puerpério": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Primíparas solteiras vazias descartadas": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Primíparas solteiras vazias gordas": {
-        "unit": "cab",
-        "category": "BOVINOS"
-      },
-      "Primíparas solteiras vazias reservadas": {
-        "unit": "cab",
-        "category": "BOVINOS"
+      "Abertura do Processo de Inquérito": {
+        "unit": "khaki",
+        "category": "ABPROCINQ"
       }
     },
     "formulas": {

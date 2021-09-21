@@ -3,21 +3,21 @@
     <v-card>
       <v-card-text>
         <v-container>
-          <v-text-field label="Nome" v-model="edit.class" :disabled="edit.disableEdit" />
-          <v-select
+          <!--<v-select
             :items="optionSelect.class"
             label="Situação"
             v-model="edit.class"
             required
             :disabled="edit.disableEdit"
-          />
+          />-->
           <v-select
             :items="optionSelect.resource"
-            label="Recurso"
+            label="Situação"
             v-model="edit.resource"
             required
             :disabled="edit.disableEdit"
           />
+          <v-text-field label="Sigla" v-model="edit.category" :disabled="true" />
           <!--<v-text-field
             label="Descrição"
             v-model="edit.description"
@@ -53,6 +53,7 @@ export default {
         description: "",
         class: "",
         resource: "",
+        category: "",
         disableEdit: false,
         duration: "",
         factor: ""
@@ -81,6 +82,7 @@ export default {
       this.edit.description = this.selectedNode.data.description;
       this.edit.class = this.selectedNode.data.class;
       this.edit.resource = this.selectedNode.data.resource;
+      this.edit.category = this.selectedNode.data.category;
       this.edit.duration = this.selectedNode.data.duration;
       this.edit.factor = this.selectedNode.data.factor;
     },
@@ -102,6 +104,7 @@ export default {
       this.edit.description = "";
       this.edit.class = "";
       this.edit.resource = "";
+      this.edit.category = "";
       this.edit.duration = "";
       this.edit.factor = "";
       this.edit.disableEdit = false;
@@ -126,6 +129,7 @@ export default {
       this.selectedNode.data.description = this.edit.description;
       this.selectedNode.data.class = this.edit.class;
       this.selectedNode.data.resource = this.edit.resource;
+      this.selectedNode.data.category = this.edit.category;
       this.selectedNode.data.duration = this.edit.duration;
       this.selectedNode.data.factor = this.edit.factor;
 
