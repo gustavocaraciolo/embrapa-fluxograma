@@ -3,16 +3,10 @@
     <v-card>
       <v-card-text>
         <v-container>
-          <v-text-field label="Nome" v-model="edit.name" :disabled="edit.disableEdit" />
-          <v-text-field
-            label="Descrição"
-            v-model="edit.description"
-            required
-            :disabled="edit.disableEdit"
-          />
+          <v-text-field label="Nome" v-model="edit.class" :disabled="edit.disableEdit" />
           <v-select
             :items="optionSelect.class"
-            label="Classe"
+            label="Situação"
             v-model="edit.class"
             required
             :disabled="edit.disableEdit"
@@ -24,6 +18,12 @@
             required
             :disabled="edit.disableEdit"
           />
+          <!--<v-text-field
+            label="Descrição"
+            v-model="edit.description"
+            required
+            :disabled="edit.disableEdit"
+          />
           <v-select
             :items="optionSelect.duration"
             label="Duração"
@@ -31,7 +31,7 @@
             required
             :disabled="edit.disableEdit"
           />
-          <v-select :items="optionSelect.factor" label="Fator" v-model="edit.factor" required />
+          <v-select :items="optionSelect.factor" label="Fator" v-model="edit.factor" required />-->
         </v-container>
       </v-card-text>
       <v-card-actions>

@@ -224,6 +224,7 @@ export default {
       for (let item in from) {
         to.push({
           color: from[item].color,
+          label: from[item].label,
           text: item
         });
       }

@@ -277,9 +277,9 @@
         "color": "lightgray",
         "label": "Co"
       },
-      "Diagnóstico de prenhez": {
+      "ANA": {
         "color": "gold",
-        "label": "Di"
+        "label": "Em Análise"
       },
       "Engorda a pasto": {
         "color": "beige",

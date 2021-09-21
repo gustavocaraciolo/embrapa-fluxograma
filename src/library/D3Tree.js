@@ -41,6 +41,8 @@ const DEFAULT = {
   resource: "",
   unit: "",
   category: "",
+  label: "",
+  color: "",
   duration: "",
   factor: "",
   circleSize: 26,
@@ -193,37 +195,153 @@ class D3Tree {
   inicializeData(reset) {
     this.data = {
       name: "GER",
-      parent: null,
+      value: 1,
+      description: DEFAULT.description,
+      class: DEFAULT.class,
+      resource: DEFAULT.resource,
+      unit: DEFAULT.unit,
+      category: DEFAULT.category,
+      duration: DEFAULT.duration,
+      factor: DEFAULT.factor,
       children: [
         {
           name: "ANA",
+          value: 0,
+          description: DEFAULT.description,
+          class: "ANA",
+          label: DEFAULT.label,
+          resource: DEFAULT.resource,
+          unit: DEFAULT.unit,
+          category: DEFAULT.category,
+          duration: DEFAULT.duration,
+          factor: DEFAULT.factor,
           children: [
             {
               name: "ANAA",
+              value: 0,
+              description: DEFAULT.description,
+              class: DEFAULT.class,
+              resource: DEFAULT.resource,
+              unit: DEFAULT.unit,
+              category: DEFAULT.category,
+              duration: DEFAULT.duration,
+              factor: DEFAULT.factor,
               children: [
                 {
                   name: "ECU",
+                  value: 0,
                   children: [
                     {
                       name: "ABPROCINQ",
-                      children: []
+                      children: [],
+                      class: DEFAULT.class,
+                      resource: DEFAULT.resource,
+                      unit: DEFAULT.unit,
+                      category: DEFAULT.category,
+                      duration: DEFAULT.duration,
+                      factor: DEFAULT.factor
                     },
                     {
                       name: "ARQDEC",
-                      children: []
-                    }],
-                  idBalance: 1
+                      children: [],
+                      class: DEFAULT.class,
+                      resource: DEFAULT.resource,
+                      unit: DEFAULT.unit,
+                      category: DEFAULT.category,
+                      duration: DEFAULT.duration,
+                      factor: DEFAULT.factor
+                    }]
+                },
+                {
+                  name: "PARECA",
+                  value: 0,
+                  children: [
+                    {
+                      name: "ARQPRE",
+                      children: [],
+                      class: DEFAULT.class,
+                      resource: DEFAULT.resource,
+                      unit: DEFAULT.unit,
+                      category: DEFAULT.category,
+                      duration: DEFAULT.duration,
+                      factor: DEFAULT.factor
+                    },
+                    {
+                      name: "ANA",
+                      class: "ANA",
+                      children: [],
+                      value: 0,
+                      resource: DEFAULT.resource,
+                      unit: DEFAULT.unit,
+                      category: DEFAULT.category,
+                      duration: DEFAULT.duration,
+                      factor: DEFAULT.factor
+                    }
+                    ]
                 }
               ]
             },
             {
               name: "ANAI",
+              value: 0,
               children: [
                 {
-                name: "ECU",
-                idBalance: 1
+                  name: "ECU",
+                  value: 0,
+                  description: DEFAULT.description,
+                  class: DEFAULT.class,
+                  resource: DEFAULT.resource,
+                  unit: DEFAULT.unit,
+                  category: DEFAULT.category,
+                  duration: DEFAULT.duration,
+                  factor: DEFAULT.factor,
+                  children: [
+                    {
+                      name: "ABPROCINQ",
+                      children: [],
+                      class: DEFAULT.class,
+                      resource: DEFAULT.resource,
+                      unit: DEFAULT.unit,
+                      category: DEFAULT.category,
+                      duration: DEFAULT.duration,
+                      factor: DEFAULT.factor
+                    },
+                    {
+                      name: "ARQDEC",
+                      children: [],
+                      class: DEFAULT.class,
+                      resource: DEFAULT.resource,
+                      unit: DEFAULT.unit,
+                      category: DEFAULT.category,
+                      duration: DEFAULT.duration,
+                      factor: DEFAULT.factor
+                    }]
+                },
+                {
+                  name: "ECO",
+                  value: 0,
+                  children: [
+                    {
+                      name: "ANA",
+                      children: [],
+                      value: 0,
+                      description: DEFAULT.description,
+                      class: "ANA",
+                      resource: DEFAULT.resource,
+                      unit: DEFAULT.unit,
+                      category: DEFAULT.category,
+                      duration: DEFAULT.duration,
+                      factor: DEFAULT.factor
+                    }
+                    ]
                 }
-              ]
+              ],
+              class: DEFAULT.class,
+              resource: DEFAULT.resource,
+              unit: DEFAULT.unit,
+              category: DEFAULT.category,
+              duration: DEFAULT.duration,
+              factor: DEFAULT.factor
             }
           ]
         }
@@ -324,9 +442,13 @@ class D3Tree {
     //console.log("==================");
     this.root = d3.hierarchy(this.data);
     treeLayout(this.root);
+    // flechas
     this.drawPath();
+    // círculos
     this.drawNodes();
+
     this.drawBalances();
+
   }
 
   /**
@@ -455,6 +577,7 @@ class D3Tree {
     if (d.data.idBalance > 0)
       return d.data.name.substring(0, this.sizeLabel - 1);
 
+    console.log('log: ' + d.data.class);
     return d.data.name.substring(0, this.sizeLabel);
   };
 
@@ -485,7 +608,7 @@ class D3Tree {
    */
   selectStrokeColorBalance = d => {
     if (d.data.idBalance > 0)
-      return d.value === 0 ? this.circleColor0 : this.circleColor1;
+      return d.value === 0 ? this.circleColor0 : this.circleColor0;
     else return "transparent";
   };
 
@@ -601,22 +724,19 @@ class D3Tree {
       return false;
     }*/
 
-    console.log("selected depth: " + selected.depth);
-    console.log("selected height: " + selected.height);
-    console.log("i: " + i);
-    console.log("nodeType: " + nodeType);
     let newNodeData = {
       name: "",
-      description: ""
-      /*children: [],
-      value: nodeType,
+      description: "",
+      children: [],
+      value: 0,
       idBalance: 0,
       class: DEFAULT.class,
+      label: selected.data.label,
       resource: selected.data.resource,
       unit: selected.data.unit,
       category: selected.data.category,
       duration: DEFAULT.duration,
-      factor: DEFAULT.factor*/
+      factor: DEFAULT.factor
     };
 
     //Cria um novo nó com base em newNodeData usando d3.hierarchy()
@@ -755,9 +875,6 @@ class D3Tree {
     const descendants = this.root.descendants();
     let balanceFatherCounter = 0;
     this.counterBalanceClick += 1;
-
-    console.log('this.counterBalanceClick: ' + this.counterBalanceClick);
-    console.log('d.depth: ' + d.depth);
 
     if (this.counterBalanceClick === 2) {
       this.counterBalanceClick = 0;
@@ -1081,6 +1198,11 @@ class D3Tree {
         name: d.target.data.resource,
         unit: d.target.data.unit,
         category: d.target.data.category
+      },
+      class: {
+        name: d.target.data.class,
+        label: d.target.data.label,
+        color: d.target.data.color
       }
     };
 
@@ -1126,11 +1248,11 @@ class D3Tree {
 
     this.json.simulationData.graph = simulationData.graph;
 
-    // console.log("====JSON INICIO====");
-    // console.log(JSON.stringify(this.json));
-    // console.log("====JSON FIM=======");
-    // console.log("Link para deixar o json indentado:");
-    // console.log("https://jsonformatter.org/");
+    console.log("====JSON INICIO====");
+    console.log(JSON.stringify(this.json));
+    console.log("====JSON FIM=======");
+    console.log("Link para deixar o json indentado:");
+    console.log("https://jsonformatter.org/");
 
     this.copyToClipboard(JSON.stringify(this.json));
 
@@ -1331,13 +1453,13 @@ class D3Tree {
       }
     });
 
-    // console.log("########################### -> Flow Antes");
-    // console.log(newFlow);
-    // console.log("########################### -> InvertFlow Antes");
-    // console.log(invertFlow);
+    console.log("########################### -> Flow Antes");
+    console.log(newFlow);
+    console.log("########################### -> InvertFlow Antes");
+    console.log(invertFlow);
 
     let hierarchyFlow = this.getNestedChildren(invertFlow, "");
-    // console.log(hierarchyFlow[0]);
+    console.log(hierarchyFlow[0]);
 
     this.data = hierarchyFlow[0];
     this.redrawTree(true);
