@@ -4,6 +4,7 @@ import history from "./history";
 
 const WIDTH = 1000;
 const HEIGHT = 800;
+let aux = [];
 
 export const actionsType = {
   add: "addNode",
@@ -354,7 +355,6 @@ class D3Tree {
       console.log("JSON modelo antigo ignorando simulationData");
       this.load();
     }
-
     history.saveState(this.data);
   }
 
@@ -430,6 +430,7 @@ class D3Tree {
    * Desenha a árvore completa
    */
   drawTree() {
+    
     let treeLayout = d3
       .tree()
       .nodeSize([this.nodeh, this.nodew])
@@ -439,6 +440,7 @@ class D3Tree {
     //console.log("==== New Data ====");
     //console.log(this.data);
     //console.log("==================");
+    
     this.root = d3.hierarchy(this.data);
     treeLayout(this.root);
     // flechas
@@ -519,18 +521,33 @@ class D3Tree {
   };
 
   /**
+   * @param {*} structure estrutura de dados da arvore
+   */
+  addSituacao = structure =>{
+    aux.push(structure.category);
+    if (this.data.children.length > 0) {
+      for (let index = 0; index < structure.children.length; index++) {
+        this.addSituacao(structure.children[index]);
+      }
+    }
+  }
+
+  /**
    * Seleciona a cor do nó de acordo com o atribuito classe
    */
-  selectFillColorNodeBySituacao = d => {
+   selectFillColorNodeBySituacao = d => {
+    
     let color = "white";
-    this.optionSelect.resource.forEach(function(item) {
+    this.optionSelect.resource.forEach(function(item) {    
       if (item.category === d.data.category) {
-        color = item.unit;
+        color = (aux.filter(value => item.category === value).length == 1)?'white':item.unit;
         return true;
       }
     });
+    
     return color;
   };
+  
 
   /**
    * Muda o preenchimento do nó quando o usuário passa o mouse sobre
@@ -633,6 +650,11 @@ class D3Tree {
    * Desenha todos os nós da árvore
    */
   drawNodes() {
+
+    //reiniciar e actualizar o vector auxiliar de categorias
+    aux = []; 
+    this.addSituacao(this.data); 
+
     let that = this;
     let descendants = this.root.descendants();
     this.nodes = d3
@@ -745,6 +767,8 @@ class D3Tree {
     newNode.height = selected.height - 1;
     newNode.parent = selected;
     newNode.id = Date.now();
+
+    //adiciona 
 
     //Caso o nó selecionado não tenha filho criar os vetores para armazenar-los
     if (!selected.children) {
@@ -1091,6 +1115,7 @@ class D3Tree {
   redo() {
     if (history.canRedo()) history.redo();
     this.data = history.getState();
+    
     this.redrawTree(true);
   }
 
